@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'drawing_controller.dart';
 
+import 'drawing_controller.dart';
 import 'helper/ex_value_builder.dart';
 import 'helper/get_size.dart';
 import 'paint_contents/circle.dart';
@@ -160,11 +160,21 @@ class _DrawingBoardState extends State<DrawingBoard> {
     );
 
     if (widget.showDefaultActions || widget.showDefaultTools) {
-      content = Column(
+      content = Stack(
         children: <Widget>[
-          Expanded(child: content),
-          if (widget.showDefaultActions) _buildDefaultActions,
-          if (widget.showDefaultTools) _buildDefaultTools,
+          Positioned(child: content),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Row(
+              mainAxisAlignment : MainAxisAlignment.center,
+              children: <Widget>[
+                if (widget.showDefaultTools) _buildDefaultTools,
+                if (widget.showDefaultActions) _buildDefaultActions,
+              ],
+            ),
+          ),
         ],
       );
     }
